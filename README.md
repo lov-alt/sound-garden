@@ -75,7 +75,15 @@ sound-garden/
 └── .github/workflows/
 ```
 
-## Tech Stack
+Sound Garden is a standalone creative tool, part of a five-tool open-source suite:
+
+| Tool | What it does |
+|---|---|
+| **[Design Token Studio](https://github.com/lov-alt/design-token-studio)** | Define design tokens — colors, typography, spacing — with WCAG checker |
+| **[CSS Visual Toolbox](https://github.com/lov-alt/css-visual-toolbox)** | Visually edit CSS properties (clip-path, gradients, shadows, border-radius) |
+| **[Typography Lab](https://github.com/lov-alt/typography-lab)** | Content-driven layout generator — 14 archetypes, 8 typographic traditions |
+| **[Motion Token Studio](https://github.com/lov-alt/motion-token-studio)** | Design motion tokens — cubic-bezier editor, duration scale, 12 presets |
+| **Sound Garden** ← you are here | Real-time microphone → generative visual landscape |
 
 | Layer | Technology |
 |---|---|
