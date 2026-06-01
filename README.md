@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="public/favicon.svg" width="64" alt="Sound Garden" />
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1 align="center">Sound Garden</h1>
 
-Currently, two official plugins are available:
+<p align="center">
+  <strong>Your voice grows a tree</strong><br/>
+  Real-time microphone → generative visual landscape<br/>
+  Web Audio API · Canvas · Zero dependencies
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<p align="center">
+  <a href="https://lov-alt.github.io/sound-garden/"><img src="https://img.shields.io/badge/demo-live-22c55e?style=flat-square" /></a>
+  <a href="https://github.com/lov-alt/sound-garden/stargazers"><img src="https://img.shields.io/github/stars/lov-alt/sound-garden?style=flat-square&color=f59e0b" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/lov-alt/sound-garden?style=flat-square&color=6366f1" /></a>
+</p>
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## How it works
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+Microphone → 5-band frequency analysis → Canvas rendering → Your voice becomes visual
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Click the mic button and allow microphone access
+2. Make sound — speak, hum, sing, clap, play music
+3. Watch your voice grow into trees, waves, particles, or circles
+4. Switch modes with the floating toolbar
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Visual Modes
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Mode | Description | Best with |
+|---|---|---|
+| **Tree** | Recursive branches grow from your voice. Bass = trunk thickness, mid = branch count, treble = hue shift | Steady humming, talking |
+| **Wave** | Real-time oscilloscope waveform. Centered, glowing. Most direct representation of sound | Any sound |
+| **Particles** | Orbiting particles. Bass = orbit radius, volume = count + size, mid = rotation speed | Music, clapping |
+| **Circles** | Five concentric rings mapping to five frequency bands. Bass = outer, treble = inner | Music with bass |
+
+## Controls
+
+- **Mode selector** — Tree / Wave / Particles / Circles
+- **Sensitivity** — 0.5× to 3.0×, adjust for quiet or loud environments
+- **Volume bar** — Real-time volume indicator
+- **Mic toggle** — Start / stop the microphone
+
+## Tech
+
+- **Web Audio API** — `AudioContext` + `AnalyserNode` (FFT 1024) + `getByteFrequencyData`
+- **5-band decomposition** — bass (20–140Hz) / lowMid (140–400Hz) / mid (400–1.2kHz) / highMid (1.2–4kHz) / treble (4–16kHz)
+- **Canvas 2D** — `requestAnimationFrame` render loop at 60fps
+- **ResizeObserver** — Responsive canvas, pixel-ratio aware
+- **Zero runtime dependencies** — pure browser APIs
+
+## Quick Start
+
+```bash
+git clone https://github.com/lov-alt/sound-garden.git
+cd sound-garden
+npm install
+npm run dev          # http://localhost:5173
 ```
+
+Open in a browser that supports `getUserMedia` (Chrome, Firefox, Edge, Safari).
+
+## License
+
+[MIT](./LICENSE) © 2026 lov-alt — Use freely, modify freely, distribute freely. Software provided "as is", without warranty of any kind.
