@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useAudioLoop } from "./hooks/useAudioLoop";
 import { renderCanvas } from "./engine/renderer";
+import type { AudioState } from "./engine/audio";
 
 type Mode = "tree" | "wave" | "particles" | "circles";
 
@@ -11,13 +12,26 @@ const MODES: { id: Mode; label: string; emoji: string }[] = [
   { id: "circles", label: "Circles", emoji: "◎" },
 ];
 
+const silentState: AudioState = {
+  bass: 0, lowMid: 0, mid: 0, highMid: 0, treble: 0,
+  volume: 0, waveform: new Float32Array(128), active: false,
+};
+
 export default function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { state, start, stop } = useAudioLoop();
   const [mode, setMode] = useState<Mode>("tree");
   const [sensitivity, setSensitivity] = useState(1);
-  const frameRef = useRef(0);
 
+  // Keep state/mode/sensitivity in refs to avoid re-mounting the render loop
+  const stateRef = useRef(state);
+  const modeRef = useRef(mode);
+  const sensitivityRef = useRef(sensitivity);
+  stateRef.current = state;
+  modeRef.current = mode;
+  sensitivityRef.current = sensitivity;
+
+  // Canvas size
   useEffect(() => {
     const canvas = canvasRef.current;
     const obs = new ResizeObserver(() => {
@@ -29,35 +43,41 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
+  // Single render loop — never re-mounts, reads from refs
   useEffect(() => {
     const canvas = canvasRef.current;
-    const active = state.active;
-    if (!canvas || !active) return;
-
+    if (!canvas) return;
+    let frame = 0;
     let id = 0;
-    const loop = () => { frameRef.current++; renderCanvas(canvas, state, mode, frameRef.current, sensitivity); id = requestAnimationFrame(loop); };
+
+    const loop = () => {
+      frame++;
+      const s = stateRef.current;
+      const activeState = s.active ? s : silentState;
+      renderCanvas(canvas, activeState, modeRef.current, frame, sensitivityRef.current);
+      id = requestAnimationFrame(loop);
+    };
     id = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(id);
-  }, [state, mode, sensitivity]);
+  }, []);
 
   const toggleMic = useCallback(() => {
     (state.active ? stop : start)();
   }, [state.active, start, stop]);
-
-  const isIdle = !state.active;
 
   return (
     <div className="relative h-screen flex flex-col bg-zinc-950 select-none">
       <div className="flex-1 relative overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-        {isIdle && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-zinc-950/80 backdrop-blur-sm">
-            <p className="text-2xl font-light text-zinc-500 tracking-wide">Sound Garden</p>
-            <p className="text-sm text-zinc-600">你的声音会变成一棵生长的树</p>
+        {!state.active && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-zinc-950/90">
+            <p className="text-2xl font-light text-white tracking-wide">Sound Garden</p>
+            <p className="text-sm text-zinc-400">你的声音会变成一棵生长的树</p>
+            <p className="text-xs text-zinc-600">点击下方按钮开启麦克风</p>
             <button onClick={toggleMic}
-              className="mt-4 px-8 py-3 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-medium transition-all duration-300 hover:scale-105">
-              开启麦克风
+              className="mt-4 px-10 py-4 rounded-2xl bg-green-500/20 hover:bg-green-500/30 ring-1 ring-green-500/40 hover:ring-green-500/60 text-green-400 font-medium transition-all duration-300 hover:scale-105 animate-pulse">
+              🎤 开启
             </button>
           </div>
         )}
