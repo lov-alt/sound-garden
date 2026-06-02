@@ -70,7 +70,7 @@ export default function App() {
   return (
     <div className="fixed inset-0 flex flex-col bg-zinc-950 select-none">
       <div className="flex-1 relative overflow-hidden">
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+        <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
 
         {!state.active && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none">
