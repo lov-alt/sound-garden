@@ -26,7 +26,7 @@ Sound Garden transforms your microphone input into a living, breathing visual la
 
 | Mode | What you see | Sound mapping |
 |---|---|---|
-| **Tree** | A tree that grows from silence. Branches fork and spread as you speak. Hue subtly shifts with pitch. | Bass → trunk width · Mid → branch count · Treble → hue rotation · Volume → branch length |
+| **Tree** | Full tree with foliage clusters, grass, roots, and falling particles. 6 levels of branching with green/pink leaf crowns. | Bass → trunk + roots · Mid → branches + leaf density · Treble → leaf hue shift · Volume → particle count |
 | **Wave** | A glowing oscilloscope. The raw waveform ripples across the screen. The most literal representation of sound. | Waveform amplitude → vertical displacement |
 | **Particles** | Particles orbit a center. Loud = many large particles. Quiet = few small ones. They rotate faster with mid-range energy. | Bass → orbit radius · Volume → count + size · Mid → rotation speed |
 | **Circles** | Five concentric rings, one per frequency band. The outer ring pulses with bass. The inner ring trembles with treble. | Each band → one ring's radius + opacity |
@@ -95,7 +95,7 @@ Sound Garden is a standalone creative tool, part of a five-tool open-source suit
 
 | Band | Range | What's in it | Controls |
 |---|---|---|---|
-| **Bass** | 20–140 Hz | Kick drums, bass guitar, low hum | Tree trunk thickness · Particle orbit radius · Circle outer ring |
+| **Bass** | 20–140 Hz | Kick drums, bass guitar, low hum | Tree trunk + roots + grass · Particle orbit radius · Circle outer ring |
 | **Low Mid** | 140–400 Hz | Lower vocals, toms, guitar body | Branch count · Circle ring 2 |
 | **Mid** | 400–1200 Hz | Core vocals, snare, piano | Branch complexity · Particle rotation speed · Circle ring 3 |
 | **High Mid** | 1.2–4 kHz | Clarity, consonants, cymbals | Tree hue shift · Circle ring 4 |
