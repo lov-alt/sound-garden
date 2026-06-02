@@ -14,7 +14,7 @@ const MODE_RENDERERS: Record<Mode, (r: RenderCtx) => void> = {
     ctx.clearRect(0, 0, w, h);
 
     const trunkW = 8 + bass * 30 * sensitivity;
-    const branches = Math.floor(4 + (lowMid + mid) * 10 * sensitivity);
+    const branches = Math.min(7, Math.floor(3 + (lowMid + mid) * 4 * sensitivity));
 
     ctx.strokeStyle = `hsl(25, ${40 + Math.floor(treble * 30)}%, ${15 + Math.floor(volume * 30)}%)`;
     ctx.lineWidth = trunkW;

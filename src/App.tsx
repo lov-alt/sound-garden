@@ -30,13 +30,8 @@ export default function App() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const resize = () => {
-      canvas.width = canvas.clientWidth * devicePixelRatio || window.innerWidth * devicePixelRatio;
-      canvas.height = canvas.clientHeight * devicePixelRatio || window.innerHeight * devicePixelRatio;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
+    canvas.width = 800;
+    canvas.height = 1100;
   }, []);
 
   useEffect(() => {
